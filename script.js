@@ -56,3 +56,34 @@ video.addEventListener('timeupdate', function () {
     progressFilled.style.width = `${percent}%`;
 
 });
+const progress = document.querySelector('.progress');
+
+progress.addEventListener('click', function (event) {
+
+    const width = this.offsetWidth;
+    const clickPosition = event.offsetX;
+
+    const clickPercent = clickPosition / width;
+
+    video.currentTime = clickPercent * video.duration;
+
+});
+let isDragging = false;
+
+progress.addEventListener('mousedown', function () {
+    isDragging = true;
+});
+
+progress.addEventListener('mousemove', function (event) {
+
+    if (!isDragging) return;
+
+    const percent = event.offsetX / progress.offsetWidth;
+
+    video.currentTime = percent * video.duration;
+
+});
+
+document.addEventListener('mouseup', function () {
+    isDragging = false;
+});
